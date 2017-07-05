@@ -1,0 +1,108 @@
+@CHARSET "UTF-8";
+body {font-size:12px;}
+.sidebar-menu > li > a > .fa-angle-left {
+	position: relative;
+	top: -15px;
+}
+.sidebar a {
+	color: gray !important;
+}
+
+body .sidebar-menu > li > ul>li>a {
+	font-size: 12px !important;
+}
+.sidebar-menu > li.active > a{
+	color: #000 !important;
+}
+
+.content-wrapper .content {
+	padding-top: 0px;
+}
+.box-header p {
+	float: right;
+}
+.box-header tr td p {
+	float: none;
+}
+.form-control {
+	height: 28px;
+}
+table tr th.action-column {
+	width: 60px;
+}
+form .help-block {
+	margin-left: 26%;
+}
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td{
+	padding: 5px 8px;
+}
+.table > thead > tr > th {
+	background: rgba(0, 179, 238, 0.03);
+}
+.summary {
+	padding-top: 10px;
+}
+.form-control {
+	padding: 0 3px;
+}
+.category select {
+	width: auto;
+	float: left;
+	margin-left: 16px;
+}
+
+.permissions .row .checkbox {
+	line-height: 28px;
+	float: left;
+	padding: 0 10px;
+}
+.permissions .row .checkbox input,
+.permissions .row .select-all input {
+	width: 18px;
+	height: 18px;
+}
+
+
+.grid-view tr td{
+	white-space: nowrap; !important;
+	text-overflow: ellipsis;!important;
+	overflow: hidden;!important;
+}
+.grid-view table {
+	table-layout: fixed;
+}
+
+.weekly li div {
+	padding-left: 50px;
+}
+.weekly li div p {
+	height: 10px;
+}
+
+.site-index .row {
+	width: 50%;
+	margin: 0 auto;
+}
+.site-index .row div {
+	height: 100px;
+}
+.site-index .row div a {
+	width: 150px;
+	margin-right: 50px;
+}
+
+body.login-page {
+	background: url("../images/bg01.jpg") center no-repeat; !important;
+	background-size: 100%;
+}
+
+.detail-view {
+	background: #fff;
+}
+
+iframe{WuWei:expression(this.src='about:blank',this.outerHTML='');}

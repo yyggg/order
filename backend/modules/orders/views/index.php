@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'refund_address',
             'size',
             'order_no',
+            'order_wuliu_no',
             'amount',
             [
                 'attribute' => 'number',

@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'address',
             'size',
             'order_no',
+            'order_wuliu_no',
             'wuliu_no',
             'amount',
             [

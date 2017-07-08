@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
             ]); ?>
 
 
-            <?= $form->field($model, 'refund_remark')->textarea() ?>
+            <?= $form->field($model, 'wuliu_no')->textarea() ?>
 
             <div class="box-footer">
                 <a href="<?= Url::to(['index']);?>" class="col-md-offset-5 btn btn-info fa fa-reply"></a>

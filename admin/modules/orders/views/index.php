@@ -15,16 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-header">
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?php if(Yii::$app->user->can('orders/orders/create')) echo Html::a(Yii::t('app', 'Create Orders'), ['create'], ['class' => 'btn btn-success btn-xs']) ?>
-    </p>
+
     <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             [
                 'attribute' => 'id',
-                'headerOptions'=> ['width'=> '80'],
+                'headerOptions'=> ['width'=> '55'],
             ],
             'site',
             'address',
@@ -35,17 +33,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'amount',
             [
                 'attribute' => 'number',
-                'headerOptions'=> ['width'=> '80'],
+                'headerOptions'=> ['width'=> '50'],
             ],
             'shop_name',
-            'remark',
-            'admin_remark',
+            //'admin_remark',
             'created_at:date',
 
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header'=>'操作',
-                'template' => '{update}',
+                'headerOptions'=> ['width'=> '95'],
+                'template' => '{update} {view}',
                 'buttons' => [
                     'update' => function ($url, $model) {
                         if($model->status == 0)
@@ -56,10 +54,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         {
                             return Html::a('同意退款', ['refund','id'=>$model->id]);
                         }
+                        elseif ($model->status == 3)
+                        {
+                            return Html::a('确认退款', ['real-refund','id'=>$model->id]);
+                        }
                         else
                         {
                             return '';
                         }
+                    }
+                    ,
+                    'view' => function($url){
+                        return Html::a('详细', $url);
                     }
                 ],
             ],

@@ -18,7 +18,7 @@ class OrdersSearch extends Orders
     public function rules()
     {
         return [
-            [['site', 'address', 'size', 'order_no', 'amount', 'number', 'shop_name'], 'safe'],
+            [['site', 'order_no', 'number', 'shop_name'],'safe'],
         ];
     }
 

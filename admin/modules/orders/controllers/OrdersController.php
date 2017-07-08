@@ -27,7 +27,16 @@ class OrdersController extends CommonController
     {
         $searchModel = new OrdersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['status'=>$status]);
+        if($status == 2) //退款中
+        {
+            $dataProvider->query->andFilterWhere(['<','status',4]);
+            $dataProvider->query->andFilterWhere(['>','status',1]);
+        }
+        else
+        {
+            $dataProvider->query->andFilterWhere(['status'=>$status]);
+        }
+
         return $this->render('/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -43,7 +52,7 @@ class OrdersController extends CommonController
      */
     public function actionView($id)
     {
-        $model = Orders::find()->joinWith('staff')->where([Orders::tableName().'.'.'id'=>$id])->one();
+        $model = $this->findModel($id);
         return $this->render('/view', [
             'model' => $model,
         ]);
@@ -101,7 +110,6 @@ class OrdersController extends CommonController
     /**
      * 同意退款
      * @param $id
-     * @return string|\yii\web\Response
      */
     public function actionRefund($id)
     {
@@ -118,6 +126,18 @@ class OrdersController extends CommonController
 
         return $this->render('/refund',['model' => $model]);
 
+    }
+    /**
+     * 确认退款
+     * @param $id
+     */
+    public function actionRealRefund($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = 4;
+        $model->save();
+        Yii::$app->session->setFlash('success', ['delay'=>3000,'message'=>'退款成功！']);
+        return $this->redirect(['index', 'status'=>2]);
     }
     /**
      * Deletes an existing Orders model.

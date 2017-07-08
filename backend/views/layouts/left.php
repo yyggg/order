@@ -18,7 +18,7 @@
                         'active' => Yii::$app->controller->module->id == 'orders',
                         'items' => [
                             ['label' => '提交记录', 'icon' => 'fa fa-dot-circle-o','active' => Yii::$app->controller->id == 'orders', 'visible'=> isset($permissions['orders']['orders']['index']) ? 1 : 0, 'url' => ['/orders/orders/index','status'=>0]],
-                            ['label' => '退款记录', 'icon' => 'fa fa-dot-circle-o','active' => Yii::$app->controller->id == 'orders', 'visible'=> isset($permissions['orders']['orders']['index']) ? 1 : 0, 'url' => ['/orders/orders/index','status'=>3]],
+                            ['label' => '退款记录', 'icon' => 'fa fa-dot-circle-o','active' => Yii::$app->controller->id == 'orders', 'visible'=> isset($permissions['orders']['orders']['index']) ? 1 : 0, 'url' => ['/orders/orders/index','status'=>4]],
                         ],
                     ],
 

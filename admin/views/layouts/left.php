@@ -20,7 +20,7 @@
                             ['label' => '未发订单', 'icon' => 'fa fa-dot-circle-o','active' => Yii::$app->controller->id == 'orders', 'visible'=> isset($permissions['orders']['orders']['index']) ? 1 : 0, 'url' => ['/orders/orders/index','status'=>0]],
                             ['label' => '已发订单', 'icon' => 'fa fa-dot-circle-o','active' => Yii::$app->controller->id == 'orders', 'visible'=> isset($permissions['orders']['orders']['index']) ? 1 : 0, 'url' => ['/orders/orders/index','status'=>1]],
                             ['label' => '退款中', 'icon' => 'fa fa-dot-circle-o','active' => Yii::$app->controller->id == 'orders', 'visible'=> isset($permissions['orders']['orders']['index']) ? 1 : 0, 'url' => ['/orders/orders/index','status'=>2]],
-                            ['label' => '退款成功', 'icon' => 'fa fa-dot-circle-o','active' => Yii::$app->controller->id == 'orders', 'visible'=> isset($permissions['orders']['orders']['index']) ? 1 : 0, 'url' => ['/orders/orders/index','status'=>3]],
+                            ['label' => '退款成功', 'icon' => 'fa fa-dot-circle-o','active' => Yii::$app->controller->id == 'orders', 'visible'=> isset($permissions['orders']['orders']['index']) ? 1 : 0, 'url' => ['/orders/orders/index','status'=>4]],
                         ],
                     ],
 

@@ -28,7 +28,7 @@ class OrdersController extends CommonController
         $searchModel = new OrdersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if($status == 0)
-            $dataProvider->query->andFilterWhere(['<','status',2]);
+            $dataProvider->query->andFilterWhere(['<','status',4]);
         else
             $dataProvider->query->andFilterWhere(['status'=>$status]);
 
@@ -48,7 +48,7 @@ class OrdersController extends CommonController
      */
     public function actionView($id)
     {
-        $model = Orders::find()->joinWith('staff')->where([Orders::tableName().'.'.'id'=>$id])->one();
+        $model = $this->findModel($id);
         return $this->render('/view', [
             'model' => $model,
         ]);
@@ -69,7 +69,7 @@ class OrdersController extends CommonController
             if($model->save())
             {
                 Yii::$app->session->setFlash('success', ['delay'=>3000,'message'=>'保存成功！']);
-                return $this->redirect(['index']);
+                return $this->redirect(['index','status' => 0]);
             }
 
             Yii::$app->session->setFlash('error', ['delay'=>3000,'message'=>'保存失败！']);
@@ -83,10 +83,8 @@ class OrdersController extends CommonController
 
 
     /**
-     * Updates an existing Orders model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * 申请退款
      * @param integer $id
-     * @return mixed
      */
     public function actionUpdate($id)
     {
@@ -94,13 +92,31 @@ class OrdersController extends CommonController
         $data = Yii::$app->request->post();
         if($data)
         {
-            $model->wuliu_no = $data['Orders']['wuliu_no'];
+            $model->refund_remark = $data['Orders']['refund_remark'];
             $model->status = 2;
             $model->save();
-            return $this->redirect(['index']);
+            return $this->redirect(['index','status'=>0]);
         }
 
         return $this->render('/update',['model' => $model]);
+    }
+    /**
+     * 确认退款
+     * @param integer $id
+     */
+    public function actionRealRefund($id)
+    {
+        $model = $this->findModel($id);
+        $data = Yii::$app->request->post();
+        if($data)
+        {
+            $model->wuliu_no = $data['Orders']['wuliu_no'];
+            $model->status = 3;
+            $model->save();
+            return $this->redirect(['index','status'=>0]);
+        }
+
+        return $this->render('/real-refund',['model' => $model]);
     }
 
     /**

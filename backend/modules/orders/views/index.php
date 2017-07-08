@@ -24,12 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'attribute' => 'id',
-                'headerOptions'=> ['width'=> '80'],
+                'headerOptions'=> ['width'=> '50'],
             ],
             'site',
             'address',
             'refund_address',
-            'size',
+            [
+                'attribute' => 'size',
+                'headerOptions'=> ['width'=> '70'],
+            ],
             'order_no',
             'order_wuliu_no',
             [
@@ -37,31 +40,41 @@ $this->params['breadcrumbs'][] = $this->title;
                 'visible' =>  $_GET['status'] == 3 ? true : false,
                 'headerOptions'=> ['width'=> '80'],
             ],
-            'amount',
+            [
+                'attribute' => 'amount',
+                'headerOptions'=> ['width'=> '55'],
+            ],
             [
                 'attribute' => 'number',
-                'headerOptions'=> ['width'=> '80'],
+                'headerOptions'=> ['width'=> '50'],
             ],
             'shop_name',
-            'remark',
             'created_at:date',
 
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header'=>'操作',
-                'template' => '{update}',
+                'template' => '{update} {view}',
+                'headerOptions'=> ['width'=> '95'],
                 'buttons' => [
                     'update' => function ($url, $model) {
                         if($model->status < 2)
                         {
                             return Html::a('申请退款', $url);
                         }
+                        if($model->status == 3 && !$model->wuliu_no)
+                        {
+                            return Html::a('确认退款', ['real-refund','id'=>$model->id]);
+                        }
                         else
                         {
                             return '';
                         }
+                    },
+                    'view' => function($url){
+                        return Html::a('详细', $url);
                     }
-                ],
+                ]
             ],
         ],
     ]); ?>

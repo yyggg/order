@@ -55,7 +55,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $this->redirect(['orders/orders/index']);
+        $this->redirect(['orders/orders/index','status'=>0]);
     }
 
     public function actionLogin()

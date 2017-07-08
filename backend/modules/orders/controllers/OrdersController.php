@@ -27,42 +27,19 @@ class OrdersController extends CommonController
     {
         $searchModel = new OrdersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['status'=>$status]);
+        if($status == 0)
+            $dataProvider->query->andFilterWhere(['<','status',2]);
+        else
+            $dataProvider->query->andFilterWhere(['status'=>$status]);
+
+        $dataProvider->query->andFilterWhere(['userid'=>Yii::$app->user->identity->id]);
+
         return $this->render('/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
-    //活动订单列表
-    public function actionAtvIndex()
-    {
-        $searchModel = new OrdersSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['type'=>1]);
-        //限制跨校区操作
-        $dataProvider = $this->schoolRule($dataProvider);
-
-        return $this->render('/atv-index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    //已过期订单列表
-    public function actionExpiredIndex()
-    {
-        $searchModel = new OrdersSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['<','etime',time()]);
-        //限制跨校区操作
-        $dataProvider = $this->schoolRule($dataProvider);
-
-        return $this->render('/expired-index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     /**
      * Displays a single Orders model.
@@ -88,7 +65,7 @@ class OrdersController extends CommonController
         $data = Yii::$app->request->post();
 
         if ($model->load($data)) {
-
+            $model->userid = Yii::$app->user->identity->id;
             if($model->save())
             {
                 Yii::$app->session->setFlash('success', ['delay'=>3000,'message'=>'保存成功！']);

@@ -32,7 +32,7 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['site','address','size','order_no','amount','number','shop_name','status','remark','wuliu_no','refund_address','admin_remark'], 'safe'],
+            [['site','address','size','order_no','amount','number','shop_name','status','userid','remark','wuliu_no','refund_address','admin_remark'], 'safe'],
             ['created_at', 'default', 'value' => time()]
         ];
     }

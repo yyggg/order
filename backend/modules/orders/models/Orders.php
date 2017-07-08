@@ -33,7 +33,8 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             [['site','address','size','order_no','amount','number','shop_name','status','userid','remark','wuliu_no','refund_address','admin_remark'], 'safe'],
-            ['created_at', 'default', 'value' => time()]
+            ['created_at', 'default', 'value' => time()],
+            [['number','amount'],'number']
         ];
     }
 

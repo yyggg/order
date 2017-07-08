@@ -32,7 +32,8 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['site','address','size','order_no','amount','number','shop_name','status','remark','wuliu_no','refund_address','admin_remark'], 'safe'],
+            [['site','address','size','order_no','amount','number','shop_name','status','remark','wuliu_no',
+                'order_wuliu_no','refund_address','admin_remark'], 'safe'],
             ['created_at', 'default', 'value' => time()]
         ];
     }
@@ -47,7 +48,8 @@ class Orders extends \yii\db\ActiveRecord
             'site' => Yii::t('app', '商品网站'),
             'address' => Yii::t('app', '地址'),
             'refund_address' => Yii::t('app', '退款地址'),
-            'wuliu_no' => Yii::t('app', '物流单号'),
+            'wuliu_no' => Yii::t('app', '退款物流单号'),
+            'order_wuliu_no' => Yii::t('app', '下单物流单号'),
             'size' => Yii::t('app', '尺码'),
             'order_no' => Yii::t('app', '订单号'),
             'amount' => Yii::t('app', '支付金额'),

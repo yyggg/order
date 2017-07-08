@@ -89,6 +89,7 @@ class OrdersController extends CommonController
         if($data)
         {
             $model->admin_remark = $data['Orders']['admin_remark'];
+            $model->admin_remark = $data['Orders']['order_wuliu_no'];
             $model->status = 1;
             $model->save();
             return $this->redirect(['index']);

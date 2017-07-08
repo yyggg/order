@@ -32,6 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'size',
             'order_no',
             'order_wuliu_no',
+            [
+                'attribute' => 'wuliu_no',
+                'visible' =>  $_GET['status'] == 3 ? true : false,
+                'headerOptions'=> ['width'=> '80'],
+            ],
             'amount',
             [
                 'attribute' => 'number',

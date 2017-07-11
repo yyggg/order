@@ -55,7 +55,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $this->redirect(['orders/orders/index']);
+        $this->redirect(['orders/orders/index','status'=>0]);
     }
 
     public function actionLogin()
@@ -66,7 +66,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            $this->redirect(['orders/orders/index']);
+            $this->redirect(['orders/orders/index','status'=>0]);
         } else {
             return $this->render('login', [
                 'model' => $model,

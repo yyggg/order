@@ -18,7 +18,7 @@ class OrdersSearch extends Orders
     public function rules()
     {
         return [
-            [['site', 'order_no', 'amount', 'number', 'shop_name'], 'safe'],
+            [['site', 'order_no', 'address','amount', 'number', 'shop_name'], 'safe'],
         ];
     }
 
@@ -60,13 +60,13 @@ class OrdersSearch extends Orders
         $query->andFilterWhere([
             'id' => $this->id,
             'site' => $this->site,
-            'address' => $this->address,
             'size' => $this->size,
-            'order_no' => $this->order_no,
             'amount' => $this->amount,
             'number' => $this->number,
-            'shop_name' => $this->shop_name,
         ]);
+        $query->andFilterWhere(['like', 'address', $this->address])
+            ->andFilterWhere(['like', 'order_no', $this->order_no])
+            ->andFilterWhere(['like', 'shop_name', $this->shop_name]);
 
         return $dataProvider;
     }

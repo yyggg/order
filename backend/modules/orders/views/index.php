@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
     <div class="box box-info guarantee-index">
         <div class="box-header">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel, 'status' => $status]); ?>
 
     <p>
         <?php if(Yii::$app->user->can('orders/orders/create')) echo Html::a(Yii::t('app', 'Create Orders'), ['create'], ['class' => 'btn btn-success btn-xs']) ?>
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'order_wuliu_no',
             [
                 'attribute' => 'wuliu_no',
-                'visible' =>  $_GET['status'] == 3 ? true : false,
+                'visible' =>  $status == 3 ? true : false,
                 'headerOptions'=> ['width'=> '80'],
             ],
             [
@@ -79,4 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
     <?php Pjax::end(); ?></div>
+        <div>
+            订单总额：<?=$amount?>
+        </div>
     </div>

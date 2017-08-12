@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
     <div class="box box-info guarantee-index">
         <div class="box-header">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel, 'status' => $status]); ?>
 
 
     <?php Pjax::begin(); ?>    <?= GridView::widget([
@@ -72,4 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
     <?php Pjax::end(); ?></div>
+        <div>
+            订单总额：<?=$amount?>
+        </div>
     </div>

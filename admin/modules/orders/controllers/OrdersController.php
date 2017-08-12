@@ -26,7 +26,11 @@ class OrdersController extends CommonController
     public function actionIndex($status = 0)
     {
         $searchModel = new OrdersSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $queryParams = Yii::$app->request->queryParams;
+        $dataProvider = $searchModel->search($queryParams);
+
+        if (isset($queryParams['OrdersSearch']['status'])) $status = $queryParams['OrdersSearch']['status'];
+
         if($status == 2) //退款中
         {
             $dataProvider->query->andFilterWhere(['<','status',4]);
@@ -37,9 +41,18 @@ class OrdersController extends CommonController
             $dataProvider->query->andFilterWhere(['status'=>$status]);
         }
 
+        $amount = 0;
+        $data = $dataProvider->models;
+        foreach ($data as $v)
+        {
+            $amount += $v->amount;
+        }
+
         return $this->render('/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'status' => $status,
+            'amount' => $amount,
         ]);
     }
 

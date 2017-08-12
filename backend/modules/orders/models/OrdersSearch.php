@@ -15,10 +15,12 @@ class OrdersSearch extends Orders
     /**
      * @inheritdoc
      */
+    public $stime;
+    public $etime;
     public function rules()
     {
         return [
-            [['site', 'order_no', 'number','address', 'shop_name'],'safe'],
+            [['site','stime','etime', 'order_no', 'number','address', 'shop_name'],'safe'],
         ];
     }
 
@@ -48,6 +50,10 @@ class OrdersSearch extends Orders
             'query' => $query,
         ]);
 
+        $stime = isset($params['OrdersSearch']['stime']) ? strtotime($params['OrdersSearch']['stime']) : '';
+        $etime = isset($params['OrdersSearch']['etime']) ? strtotime($params['OrdersSearch']['etime']) : '';
+        unset($params['stime']);
+        unset($params['etime']);
         $this->load($params);
 
         if (!$this->validate()) {
@@ -67,6 +73,15 @@ class OrdersSearch extends Orders
         $query->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'order_no', $this->order_no])
             ->andFilterWhere(['like', 'shop_name', $this->shop_name]);
+
+        if($stime)
+        {
+            $query->andFilterWhere(['>', 'created_at', $stime]);
+        }
+        if($etime)
+        {
+            $query->andFilterWhere(['<', 'created_at', $etime]);
+        }
 
         return $dataProvider;
     }

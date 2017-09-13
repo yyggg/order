@@ -31,20 +31,10 @@ class OrdersController extends CommonController
         if (isset($queryParams['OrdersSearch']['status'])) $status = $queryParams['OrdersSearch']['status'];
 
         $dataProvider = $searchModel->search($queryParams);
-        if($status == 2) //退款中
-        {
+        if($status == 0)
             $dataProvider->query->andFilterWhere(['<','status',4]);
-            $dataProvider->query->andFilterWhere(['>','status',1]);
-        }
         else
-        {
             $dataProvider->query->andFilterWhere(['status'=>$status]);
-        }
-
-        /*if($status == 0)
-            $dataProvider->query->andFilterWhere(['<','status',4]);
-        else
-            $dataProvider->query->andFilterWhere(['status'=>$status]);*/
 
         $dataProvider->query->andFilterWhere(['userid'=>Yii::$app->user->identity->id]);
 

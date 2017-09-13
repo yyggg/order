@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
     }
 </style>
 <div class="guarantee-search">
-    
+
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],

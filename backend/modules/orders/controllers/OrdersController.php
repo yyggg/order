@@ -27,14 +27,31 @@ class OrdersController extends CommonController
     {
         $searchModel = new OrdersSearch();
         $queryParams = Yii::$app->request->queryParams;
+        $dataProvider = $searchModel->search($queryParams);
 
         if (isset($queryParams['OrdersSearch']['status'])) $status = $queryParams['OrdersSearch']['status'];
 
-        $dataProvider = $searchModel->search($queryParams);
-        if($status == 0)
+
+        /*if($status == 0)
             $dataProvider->query->andFilterWhere(['<','status',4]);
         else
+            $dataProvider->query->andFilterWhere(['status'=>$status]);*/
+
+        if($status == 2) //退款中
+        {
+            $dataProvider->query->andFilterWhere(['<','status',4]);
+            $dataProvider->query->andFilterWhere(['>','status',1]);
+        }
+        elseif ($status == 0)
+        {
+            $dataProvider->query->andFilterWhere(['<','status',4]);
+        }
+        else
+        {
             $dataProvider->query->andFilterWhere(['status'=>$status]);
+        }
+
+
 
         $dataProvider->query->andFilterWhere(['userid'=>Yii::$app->user->identity->id]);
 

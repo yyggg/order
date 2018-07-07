@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'order_wuliu_no',
             'shop_name',
             'remark_self',
+            'admin_remark',
             'remark',
             'created_at:date',
         ],

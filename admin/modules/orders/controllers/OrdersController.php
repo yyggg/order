@@ -31,29 +31,15 @@ class OrdersController extends CommonController
 
         if (isset($queryParams['OrdersSearch']['status'])) $status = $queryParams['OrdersSearch']['status'];
 
-
-        /*if($status == 0)
-            $dataProvider->query->andFilterWhere(['<','status',4]);
-        else
-            $dataProvider->query->andFilterWhere(['status'=>$status]);*/
-
         if($status == 2) //退款中
         {
             $dataProvider->query->andFilterWhere(['<','status',4]);
             $dataProvider->query->andFilterWhere(['>','status',1]);
         }
-        elseif ($status == 0)
-        {
-            $dataProvider->query->andFilterWhere(['<','status',4]);
-        }
         else
         {
             $dataProvider->query->andFilterWhere(['status'=>$status]);
         }
-
-
-
-        $dataProvider->query->andFilterWhere(['userid'=>Yii::$app->user->identity->id]);
 
         $amount = 0;
         $data = $dataProvider->models;
@@ -69,6 +55,7 @@ class OrdersController extends CommonController
             'amount' => $amount,
         ]);
     }
+
 
 
     /**
@@ -95,11 +82,11 @@ class OrdersController extends CommonController
         $data = Yii::$app->request->post();
 
         if ($model->load($data)) {
-            $model->userid = Yii::$app->user->identity->id;
+
             if($model->save())
             {
                 Yii::$app->session->setFlash('success', ['delay'=>3000,'message'=>'保存成功！']);
-                return $this->redirect(['index','status' => 0]);
+                return $this->redirect(['index']);
             }
 
             Yii::$app->session->setFlash('error', ['delay'=>3000,'message'=>'保存失败！']);
@@ -113,8 +100,9 @@ class OrdersController extends CommonController
 
 
     /**
-     * 申请退款
-     * @param integer $id
+     * 发货
+     * @param $id
+     * @return string|\yii\web\Response
      */
     public function actionUpdate($id)
     {
@@ -122,14 +110,37 @@ class OrdersController extends CommonController
         $data = Yii::$app->request->post();
         if($data)
         {
-            $model->refund_remark = $data['Orders']['refund_remark'];
-            $model->status = 2;
+            $model->admin_remark = $data['Orders']['admin_remark'];
+            $model->order_wuliu_no = $data['Orders']['order_wuliu_no'];
+            $model->status = 1;
             $model->save();
-            return $this->redirect(['index','status'=>0]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('/update',['model' => $model]);
     }
+
+    /**
+     * 同意退款
+     * @param $id
+     */
+    public function actionRefund($id)
+    {
+        $model = $this->findModel($id);
+        $data = Yii::$app->request->post();
+        if($data)
+        {
+            $model->admin_remark = $data['Orders']['admin_remark'];
+            $model->refund_address = $data['Orders']['refund_address'];
+            $model->status = 3;
+            $model->save();
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('/refund',['model' => $model]);
+
+    }
+
     public function actionRemarkSelf($id)
     {
         $model = $this->findModel($id);
@@ -143,25 +154,19 @@ class OrdersController extends CommonController
 
         return $this->render('/admin-remark',['model' => $model]);
     }
+
     /**
      * 确认退款
-     * @param integer $id
+     * @param $id
      */
     public function actionRealRefund($id)
     {
         $model = $this->findModel($id);
-        $data = Yii::$app->request->post();
-        if($data)
-        {
-            $model->wuliu_no = $data['Orders']['wuliu_no'];
-            $model->status = 3;
-            $model->save();
-            return $this->redirect(['index','status'=>0]);
-        }
-
-        return $this->render('/real-refund',['model' => $model]);
+        $model->status = 4;
+        $model->save();
+        Yii::$app->session->setFlash('success', ['delay'=>3000,'message'=>'退款成功！']);
+        return $this->redirect(['index', 'status'=>2]);
     }
-
     /**
      * Deletes an existing Orders model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

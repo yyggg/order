@@ -136,7 +136,7 @@ class OrdersController extends CommonController
         $data = Yii::$app->request->post();
         if($data)
         {
-            $model->refund_remark = $data['Orders']['remark_self'];
+            $model->remark_self = $data['Orders']['remark_self'];
             $model->save(false);
             return $this->redirect(['index','status'=>0]);
         }

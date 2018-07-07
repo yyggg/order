@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'header'=>'操作',
                 'template' => '{update} {view}',
-                'headerOptions'=> ['width'=> '160'],
+                'headerOptions'=> ['width'=> '155'],
                 'buttons' => [
                     'update' => function ($url, $model) {
                         if($model->status < 2)
